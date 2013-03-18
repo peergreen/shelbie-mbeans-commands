@@ -18,6 +18,7 @@ package com.peergreen.shelbie.mbeans.internal;
 import java.lang.management.ManagementFactory;
 import java.util.Set;
 import javax.management.MBeanAttributeInfo;
+import javax.management.MBeanFeatureInfo;
 import javax.management.MBeanInfo;
 import javax.management.MBeanNotificationInfo;
 import javax.management.MBeanOperationInfo;
@@ -76,7 +77,7 @@ public class MBeanInfoAction implements Action {
             for (MBeanAttributeInfo attributeInfo : beanInfo.getAttributes()) {
                 String rw = attributeInfo.isReadable() ? "r" : "-";
                 rw += attributeInfo.isWritable() ? "w" : "-";
-                buffer.render("  * %-30s [%S] %-40s %s%n", attributeInfo.getName(), rw, attributeInfo.getType(), attributeInfo.getDescription());
+                buffer.render("  * %-30s [%S] %-40s %s%n", attributeInfo.getName(), rw, attributeInfo.getType(), getDescription(attributeInfo));
             }
         }
 
@@ -91,7 +92,7 @@ public class MBeanInfoAction implements Action {
                     }
                     parameters.render("%s %s", parameterInfo.getType(), parameterInfo.getName());
                 }
-                buffer.render("  * %s(%s):%s %s %n", operationInfo.getName(), parameters, operationInfo.getReturnType(), operationInfo.getDescription());
+                buffer.render("  * %s(%s):%s %s %n", operationInfo.getName(), parameters, operationInfo.getReturnType(), getDescription(operationInfo));
             }
         }
 
@@ -99,7 +100,7 @@ public class MBeanInfoAction implements Action {
             buffer.render("Notifications:");
             buffer.newline();
             for (MBeanNotificationInfo notificationInfo : beanInfo.getNotifications()) {
-                buffer.render("  * %s %s%n", notificationInfo.getName(), notificationInfo.getDescription());
+                buffer.render("  * %s %s%n", notificationInfo.getName(), getDescription(notificationInfo));
                 for (String type : notificationInfo.getNotifTypes()) {
                     buffer.render("    + %s%n", type);
                 }
@@ -107,5 +108,18 @@ public class MBeanInfoAction implements Action {
         }
         System.out.print(buffer.toString());
         return null;
+    }
+
+    /**
+     * Returns an empty description if description == name
+     * @param featureInfo contains the description value
+     * @return an empty String if description equals name
+     */
+    private String getDescription(MBeanFeatureInfo featureInfo) {
+        String featureName = featureInfo.getName();
+        if ((featureName != null) && (featureName.equals(featureInfo.getDescription()))) {
+            return "";
+        }
+        return featureInfo.getDescription();
     }
 }
