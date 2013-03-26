@@ -16,7 +16,6 @@
 package com.peergreen.shelbie.mbeans.internal;
 
 import java.lang.management.ManagementFactory;
-import java.util.Set;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanFeatureInfo;
 import javax.management.MBeanInfo;
