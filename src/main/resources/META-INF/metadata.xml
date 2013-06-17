@@ -20,8 +20,12 @@
 
   <command-instance xmlns="org.ow2.shelbie"
                     action="com.peergreen.shelbie.mbeans.internal.GetAttributesAction">
-  <completer component="com.peergreen.shelbie.mbeans.internal.completer.ObjectNameCompleter" />
-</command-instance>
+    <completer component="com.peergreen.shelbie.mbeans.internal.completer.ObjectNameCompleter" />
+  </command-instance>
+  <command-instance xmlns="org.ow2.shelbie"
+                    action="com.peergreen.shelbie.mbeans.internal.SetAttributeAction">
+    <completer component="com.peergreen.shelbie.mbeans.internal.completer.ObjectNameCompleter" />
+  </command-instance>
   <command-instance xmlns="org.ow2.shelbie"
                     action="com.peergreen.shelbie.mbeans.internal.ListDomainsAction" />
   <command-instance xmlns="org.ow2.shelbie"
